@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Trey Digital — Business Playbook</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --sidebar:260px;
+  --accent:#10b981;
+  --accent-dark:#059669;
+  --bg:#0f172a;
+  --bg2:#1e293b;
+  --content:#f1f5f9;
+  --card:#ffffff;
+  --text:#0f172a;
+  --muted:#64748b;
+  --border:#e2e8f0;
+  --s1:#6366f1;--s2:#10b981;--s3:#f59e0b;--s4:#3b82f6;
+  --s5:#ec4899;--s6:#f97316;--s7:#8b5cf6;--s8:#14b8a6;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--content);color:var(--text);display:flex;min-height:100vh;}
+
+/* SIDEBAR */
+#sidebar{
+  width:var(--sidebar);min-width:var(--sidebar);background:var(--bg);
+  height:100vh;position:fixed;top:0;left:0;overflow-y:auto;
+  display:flex;flex-direction:column;z-index:100;
+}
+.sb-logo{padding:24px 20px 16px;border-bottom:1px solid rgba(255,255,255,0.08);}
+.sb-logo h1{color:#fff;font-size:1rem;font-weight:700;letter-spacing:-.01em;}
+.sb-logo p{color:#64748b;font-size:0.72rem;margin-top:3px;}
+.sb-progress{padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.08);}
+.sb-progress-label{display:flex;justify-content:space-between;margin-bottom:8px;}
+.sb-progress-label span{color:#94a3b8;font-size:0.72rem;}
+.sb-progress-label strong{color:#fff;font-size:0.72rem;}
+.progress-track{height:6px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--accent);border-radius:3px;transition:width .4s ease;width:0%;}
+.sb-nav{flex:1;padding:12px 0;}
+.nav-item{
+  display:flex;align-items:center;gap:10px;padding:10px 20px;
+  cursor:pointer;transition:all .2s;text-decoration:none;
+  border-left:3px solid transparent;
+}
+.nav-item:hover{background:rgba(255,255,255,0.05);}
+.nav-item.active{background:rgba(16,185,129,0.1);border-left-color:var(--accent);}
+.nav-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.nav-label{flex:1;}
+.nav-label span{display:block;color:#94a3b8;font-size:0.78rem;font-weight:500;transition:color .2s;}
+.nav-item.active .nav-label span,.nav-item:hover .nav-label span{color:#fff;}
+.nav-label small{display:block;color:#475569;font-size:0.65rem;margin-top:1px;}
+.nav-check{font-size:0.65rem;color:#475569;}
+.nav-item.active .nav-check{color:var(--accent);}
+.sb-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,0.08);}
+.sb-footer p{color:#475569;font-size:0.68rem;text-align:center;line-height:1.5;}
+
+/* MAIN */
+#main{margin-left:var(--sidebar);flex:1;padding:32px;min-height:100vh;}
+.top-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;}
+.top-bar h2{font-size:1.5rem;font-weight:700;color:var(--text);}
+.top-bar p{color:var(--muted);font-size:0.85rem;}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;}
+.stat-card{background:var(--card);border-radius:12px;padding:20px;border:1px solid var(--border);text-align:center;}
+.stat-card strong{display:block;font-size:1.8rem;font-weight:700;color:var(--text);}
+.stat-card span{font-size:0.78rem;color:var(--muted);margin-top:2px;display:block;}
+
+/* SECTIONS */
+.section{margin-bottom:40px;scroll-margin-top:20px;}
+.section-header{display:flex;align-items:center;gap:14px;margin-bottom:20px;}
+.section-badge{
+  width:36px;height:36px;border-radius:10px;display:flex;align-items:center;
+  justify-content:center;font-size:0.8rem;font-weight:700;color:#fff;flex-shrink:0;
+}
+.section-title{flex:1;}
+.section-title h3{font-size:1.15rem;font-weight:700;color:var(--text);}
+.section-title p{font-size:0.8rem;color:var(--muted);margin-top:2px;}
+.section-prog{text-align:right;}
+.section-prog small{font-size:0.72rem;color:var(--muted);display:block;margin-bottom:4px;}
+.section-prog .prog-track{width:100px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.section-prog .prog-fill{height:100%;border-radius:2px;transition:width .3s ease;width:0%;}
+
+/* CARDS */
+.card{background:var(--card);border-radius:12px;padding:24px;border:1px solid var(--border);margin-bottom:16px;}
+.card-title{font-size:0.85rem;font-weight:600;color:var(--text);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.card-title .badge{background:var(--content);color:var(--muted);font-size:0.68rem;padding:2px 8px;border-radius:10px;font-weight:500;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+
+/* CHECKLIST */
+.checklist{display:flex;flex-direction:column;gap:8px;}
+.task-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:8px;border:1px solid var(--border);transition:all .2s;cursor:pointer;}
+.task-item:hover{border-color:var(--accent);background:#f0fdf4;}
+.task-item.done{background:#f0fdf4;border-color:#bbf7d0;}
+.task-item.done .task-text{text-decoration:line-through;color:var(--muted);}
+.task-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent);cursor:pointer;flex-shrink:0;margin-top:1px;}
+.task-text{font-size:0.83rem;color:var(--text);line-height:1.4;}
+.task-tag{font-size:0.65rem;background:var(--content);color:var(--muted);padding:1px 7px;border-radius:8px;white-space:nowrap;flex-shrink:0;}
+
+/* ACCORDION */
+.accordion{border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:12px;}
+.acc-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 18px;background:var(--card);cursor:pointer;
+  transition:background .2s;user-select:none;
+}
+.acc-header:hover{background:#f8fafc;}
+.acc-header h4{font-size:0.85rem;font-weight:600;color:var(--text);}
+.acc-header .acc-meta{display:flex;align-items:center;gap:10px;}
+.acc-tag{font-size:0.68rem;padding:3px 10px;border-radius:10px;font-weight:500;}
+.acc-arrow{color:var(--muted);transition:transform .3s;font-size:0.8rem;}
+.acc-arrow.open{transform:rotate(180deg);}
+.acc-body{display:none;padding:18px;background:#fafbfc;border-top:1px solid var(--border);}
+.acc-body.open{display:block;}
+.script-box{
+  background:var(--bg);color:#e2e8f0;border-radius:8px;padding:18px;
+  font-size:0.82rem;line-height:1.7;white-space:pre-wrap;font-family:'Inter',sans-serif;
+  position:relative;
+}
+.copy-btn{
+  position:absolute;top:10px;right:10px;background:rgba(255,255,255,0.1);
+  color:#94a3b8;border:none;border-radius:6px;padding:5px 12px;
+  font-size:0.7rem;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif;
+}
+.copy-btn:hover{background:var(--accent);color:#fff;}
+.copy-btn.copied{background:var(--accent);color:#fff;}
+.script-note{font-size:0.78rem;color:var(--muted);margin-top:10px;font-style:italic;}
+
+/* PRICING */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.price-card{background:var(--card);border-radius:12px;padding:24px;border:2px solid var(--border);position:relative;transition:all .2s;}
+.price-card.featured{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent);}
+.price-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;font-size:0.68rem;font-weight:600;padding:3px 12px;border-radius:10px;white-space:nowrap;}
+.price-name{font-size:0.78rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;}
+.price-amount{font-size:2rem;font-weight:700;color:var(--text);margin-bottom:4px;}
+.price-amount span{font-size:0.85rem;font-weight:400;color:var(--muted);}
+.price-desc{font-size:0.78rem;color:var(--muted);margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+.price-features{display:flex;flex-direction:column;gap:8px;}
+.price-feat{display:flex;align-items:flex-start;gap:8px;font-size:0.8rem;color:var(--text);}
+.price-feat::before{content:'✓';color:var(--accent);font-weight:700;flex-shrink:0;}
+
+/* AVATAR TABS */
+.tab-bar{display:flex;gap:4px;margin-bottom:16px;background:var(--content);padding:4px;border-radius:10px;width:fit-content;}
+.tab-btn{padding:8px 18px;border-radius:7px;border:none;background:transparent;font-size:0.8rem;font-weight:500;color:var(--muted);cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif;}
+.tab-btn.active{background:var(--card);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,0.08);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+.avatar-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.avatar-block{background:var(--content);border-radius:10px;padding:16px;}
+.avatar-block h5{font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:10px;}
+.avatar-block ul{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.avatar-block ul li{font-size:0.8rem;color:var(--text);padding-left:12px;position:relative;line-height:1.4;}
+.avatar-block ul li::before{content:'•';position:absolute;left:0;color:var(--accent);}
+.quote-box{background:var(--bg);border-radius:10px;padding:16px;margin-top:14px;}
+.quote-box h5{font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#475569;margin-bottom:10px;}
+.quote-box .quote{font-size:0.82rem;color:#94a3b8;font-style:italic;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);}
+.quote-box .quote:last-child{border-bottom:none;}
+
+/* DAY CARDS */
+.day-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+.day-card{background:var(--card);border-radius:10px;padding:16px;border:1px solid var(--border);}
+.day-card.done-day{border-color:#bbf7d0;background:#f0fdf4;}
+.day-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.day-num{width:32px;height:32px;border-radius:8px;background:var(--content);display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;color:var(--muted);flex-shrink:0;}
+.day-card.done-day .day-num{background:#bbf7d0;color:#059669;}
+.day-title{font-size:0.85rem;font-weight:600;color:var(--text);}
+.day-time{font-size:0.7rem;color:var(--muted);}
+.day-tasks{display:flex;flex-direction:column;gap:5px;}
+.day-task{font-size:0.78rem;color:var(--muted);padding-left:12px;position:relative;line-height:1.4;}
+.day-task::before{content:'→';position:absolute;left:0;color:var(--accent);font-size:0.7rem;}
+
+/* RANKING TABLE */
+.rank-table{width:100%;border-collapse:collapse;}
+.rank-table th{text-align:left;font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:10px 14px;border-bottom:2px solid var(--border);}
+.rank-table td{padding:10px 14px;font-size:0.82rem;border-bottom:1px solid var(--border);color:var(--text);}
+.rank-table tr:last-child td{border-bottom:none;}
+.rank-pill{display:inline-flex;align-items:center;gap:4px;font-size:0.72rem;font-weight:600;padding:3px 10px;border-radius:10px;}
+.rank-1{background:#dcfce7;color:#15803d;}
+.rank-2{background:#fef9c3;color:#a16207;}
+.rank-3{background:#fee2e2;color:#b91c1c;}
+
+/* GUARANTEE BOX */
+.guarantee{background:linear-gradient(135deg,#0f172a,#1e3a2f);border-radius:14px;padding:28px;color:#fff;text-align:center;margin-top:16px;}
+.guarantee h4{font-size:1.1rem;font-weight:700;margin-bottom:10px;}
+.guarantee p{color:#94a3b8;font-size:0.88rem;line-height:1.6;max-width:500px;margin:0 auto;}
+.guarantee .g-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.4);color:var(--accent);font-size:0.75rem;font-weight:600;padding:5px 14px;border-radius:20px;margin-bottom:14px;}
+
+/* MILESTONE */
+.milestone-card{background:var(--card);border-radius:12px;padding:22px;border:1px solid var(--border);margin-bottom:12px;}
+.milestone-card.done{border-color:#bbf7d0;background:#f0fdf4;}
+.milestone-header{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.milestone-month{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;color:#fff;flex-shrink:0;}
+.milestone-info h4{font-size:0.95rem;font-weight:700;color:var(--text);}
+.milestone-info p{font-size:0.78rem;color:var(--muted);margin-top:2px;}
+.milestone-items{display:flex;flex-direction:column;gap:6px;}
+.milestone-item{display:flex;align-items:flex-start;gap:8px;font-size:0.8rem;color:var(--text);}
+.milestone-item::before{content:'✓';color:var(--accent);font-weight:700;flex-shrink:0;}
+
+/* FAQ */
+.faq-item{border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:10px;}
+.faq-q{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:var(--card);cursor:pointer;font-size:0.88rem;font-weight:600;color:var(--text);}
+.faq-q:hover{background:#f8fafc;}
+.faq-a{display:none;padding:16px 18px;background:#fafbfc;font-size:0.83rem;color:var(--muted);line-height:1.7;border-top:1px solid var(--border);}
+.faq-a.open{display:block;}
+
+/* CHANNEL CARDS */
+.channel-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.channel-card{border-radius:10px;padding:18px;border:2px solid;}
+.channel-card.go{border-color:#bbf7d0;background:#f0fdf4;}
+.channel-card.drop{border-color:#fecaca;background:#fff5f5;}
+.channel-card h5{font-size:0.8rem;font-weight:700;margin-bottom:6px;}
+.channel-card.go h5{color:#15803d;}
+.channel-card.drop h5{color:#b91c1c;}
+.channel-card p{font-size:0.78rem;color:var(--muted);line-height:1.5;}
+.channel-label{display:inline-flex;align-items:center;gap:4px;font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:6px;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em;}
+.channel-label.go{background:#dcfce7;color:#15803d;}
+.channel-label.drop{background:#fee2e2;color:#b91c1c;}
+
+/* BOTTLENECK */
+.bottleneck-box{background:linear-gradient(135deg,#1e1b4b,#312e81);border-radius:14px;padding:28px;color:#fff;}
+.bottleneck-box h4{font-size:1.1rem;font-weight:700;margin-bottom:10px;}
+.bottleneck-box p{color:#a5b4fc;font-size:0.85rem;line-height:1.7;}
+.bottleneck-box .fix{margin-top:16px;background:rgba(255,255,255,0.08);border-radius:10px;padding:14px;}
+.bottleneck-box .fix h5{font-size:0.78rem;font-weight:600;color:#c7d2fe;margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em;}
+.bottleneck-box .fix p{color:#c7d2fe;font-size:0.82rem;}
+
+/* UTILS */
+.divider{height:1px;background:var(--border);margin:20px 0;}
+.tag{display:inline-flex;align-items:center;font-size:0.72rem;font-weight:500;padding:3px 10px;border-radius:8px;background:var(--content);color:var(--muted);margin:3px;}
+.green-tag{background:#dcfce7;color:#15803d;}
+.alert{background:#fff7ed;border:1px solid #fed7aa;border-radius:10px;padding:14px 18px;font-size:0.82rem;color:#9a3412;line-height:1.5;margin-bottom:16px;}
+.alert strong{font-weight:600;}
+.info{background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:14px 18px;font-size:0.82rem;color:#1e40af;line-height:1.5;margin-bottom:16px;}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sb-logo">
+    <h1>Trey Digital 🌿</h1>
+    <p>Business Playbook — 2025</p>
+  </div>
+  <div class="sb-progress">
+    <div class="sb-progress-label"><span>Overall Progress</span><strong id="pct-overall">0%</strong></div>
+    <div class="progress-track"><div class="progress-fill" id="bar-overall"></div></div>
+  </div>
+  <nav class="sb-nav">
+    <a class="nav-item" onclick="scrollTo('s1')">
+      <div class="nav-dot" style="background:var(--s1)"></div>
+      <div class="nav-label"><span>1. The Business</span><small id="c-s1">0/4 tasks</small></div>
+    </a>
+    <a class="nav-item" onclick="scrollTo('s2')">
+      <div class="nav-dot" style="background:var(--s2)"></div>
+      <div class="nav-label"><span>2. Target Niches</span><small id="c-s2">0/5 tasks</small></div>
+    </a>
+    <a class="nav-item" onclick="scrollTo('s3')">
+      <div class="nav-dot" style="background:var(--s3)"></div>
+      <div class="nav-label"><span>3. Website Services</span><small id="c-s3">0/5 tasks</small></div>
+    </a>
+    <a class="nav-item" onclick="scrollTo('s4')">
+      <div class="nav-dot" style="background:var(--s4)"></div>
+      <div class="nav-label"><span>4. Customer Avatars</span><small id="c-s4">0/4 tasks</small></div>
+    </a>
+    <a class="nav-item" onclick="scrollTo('s5')">
+      <div class="nav-dot" style="background:var(--s5)"></div>
+      <div class="nav-label"><span>5. The Offer</span><small id="c-s5">0/6 tasks</small></div>
+    </a>
+    <a class="nav-item" onclick="scrollTo('s6')">
+      <div class="nav-dot" style="background:var(--s6)"></div>
+      <div class="nav-label"><span>6. 14-Day Launch</span><small id="c-s6">0/14 tasks</small></div>
+    </a>
+    <a class="nav-item" onclick="scrollTo('s7')">
+      <div class="nav-dot" style="background:var(--s7)"></div>
+      <div class="nav-label"><span>7. Sales System</span><small id="c-s7">0/8 tasks</small></div>
+    </a>
+    <a class="nav-item" onclick="scrollTo('s8')">
+      <div class="nav-dot" style="background:var(--s8)"></div>
+      <div class="nav-label"><span>8. Growth Roadmap</span><small id="c-s8">0/6 tasks</small></div>
+    </a>
+  </nav>
+  <div class="sb-footer"><p>Built for Trey Digital<br/>Your complete business reference</p></div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main id="main">
+
+  <!-- DASHBOARD -->
+  <div class="top-bar">
+    <div><h2>Trey Digital — Business Playbook</h2><p>Your complete reference for building, launching, and scaling your agency</p></div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-card"><strong id="stat-done">0</strong><span>Tasks Completed</span></div>
+    <div class="stat-card"><strong id="stat-total">52</strong><span>Total Tasks</span></div>
+    <div class="stat-card"><strong>$297</strong><span>Starting Price/mo</span></div>
+    <div class="stat-card"><strong>4</strong><span>Target Niches</span></div>
+  </div>
+
+  <!-- ============================================================
+       SECTION 1 — THE BUSINESS
+  ============================================================ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <div class="section-badge" style="background:var(--s1)">01</div>
+      <div class="section-title"><h3>The Business — Trey Digital</h3><p>Foundation, validation, and your core position in the market</p></div>
+      <div class="section-prog"><small id="c2-s1">0/4</small><div class="prog-track"><div class="prog-fill" id="pb-s1" style="background:var(--s1)"></div></div></div>
+    </div>
+
+    <div class="alert"><strong>Honest Reality:</strong> The generic GHL agency model is saturated with 60,000+ agencies. You win by being specific — four niches, one system, one clear result. That's what Trey Digital is.</div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">What You're Building</div>
+        <p style="font-size:0.83rem;color:var(--muted);line-height:1.7;margin-bottom:12px;">Trey Digital is a <strong>local service business automation agency</strong>. You use GoHighLevel (GHL) to build systems that respond to leads 24/7, follow up on quotes automatically, and collect Google reviews after every job — without the business owner doing anything differently.</p>
+        <p style="font-size:0.83rem;color:var(--muted);line-height:1.7;">You are NOT selling "digital marketing." You are selling a system that stops businesses from losing money to whoever follows up faster.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Your Unfair Advantage</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div class="price-feat" style="font-size:0.82rem;">You only work with 4 types of businesses — not generalist</div>
+          <div class="price-feat" style="font-size:0.82rem;">Done-FOR-you — clients never touch software</div>
+          <div class="price-feat" style="font-size:0.82rem;">Month-to-month — no scary contracts</div>
+          <div class="price-feat" style="font-size:0.82rem;">Results guaranteed in writing (30 days)</div>
+          <div class="price-feat" style="font-size:0.82rem;">You know their seasonality, language, and problems</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Setup Checklist <span class="badge">Complete these first</span></div>
+      <div class="checklist">
+        <label class="task-item" onclick="toggle('t1_1')">
+          <input type="checkbox" id="t1_1" onchange="save(this)"/>
+          <span class="task-text">Sign up for GoHighLevel 30-day free trial and explore the platform</span>
+          <span class="task-tag">Day 1</span>
+        </label>
+        <label class="task-item" onclick="toggle('t1_2')">
+          <input type="checkbox" id="t1_2" onchange="save(this)"/>
+          <span class="task-text">Set up Stripe recurring billing so clients are charged automatically each month</span>
+          <span class="task-tag">Day 1</span>
+        </label>
+        <label class="task-item" onclick="toggle('t1_3')">
+          <input type="checkbox" id="t1_3" onchange="save(this)"/>
+          <span class="task-text">Create a Calendly account with a 30-minute "Discovery Call" slot</span>
+          <span class="task-tag">Day 1</span>
+        </label>
+        <label class="task-item" onclick="toggle('t1_4')">
+          <input type="checkbox" id="t1_4" onchange="save(this)"/>
+          <span class="task-text">Build your prospect tracking spreadsheet (Name, Niche, Phone, Platform, Date Contacted, Status)</span>
+          <span class="task-tag">Day 1</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       SECTION 2 — NICHES
+  ============================================================ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <div class="section-badge" style="background:var(--s2)">02</div>
+      <div class="section-title"><h3>Target Niches</h3><p>The four underserved markets you will own</p></div>
+      <div class="section-prog"><small id="c2-s2">0/5</small><div class="prog-track"><div class="prog-fill" id="pb-s2" style="background:var(--s2)"></div></div></div>
+    </div>
+
+    <div class="three-col" style="margin-bottom:16px;">
+      <div class="card" style="border-top:3px solid var(--s2)">
+        <div class="card-title">🚗 Auto Detailing & Mechanic Shops</div>
+        <p style="font-size:0.8rem;color:var(--muted);line-height:1.6;margin-bottom:10px;">Reviews are existential here — people trust a mechanic with a $40k car based on Google stars. High emotion = high urgency to fix reputation. SMS rebooking ("it's been 3 months, ready for another detail?") is an obvious win.</p>
+        <div><span class="tag green-tag">Low Competition</span><span class="tag green-tag">High Review Need</span></div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--s3)">
+        <div class="card-title">🦟 Pest Control</div>
+        <p style="font-size:0.8rem;color:var(--muted);line-height:1.6;margin-bottom:10px;">Seasonal, recurring service model — perfect for SMS automation. Almost no GHL agencies target this. Quote follow-up SMS has immediate, obvious ROI. Owner-operated and accessible.</p>
+        <div><span class="tag green-tag">Very Underserved</span><span class="tag green-tag">Recurring Revenue</span></div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--s4)">
+        <div class="card-title">🏊 Pool Service</div>
+        <p style="font-size:0.8rem;color:var(--muted);line-height:1.6;margin-bottom:10px;">Weekly/monthly recurring contracts, seasonal surges, and virtually zero GHL agency competition. SMS for service reminders and review requests fits naturally into their workflow.</p>
+        <div><span class="tag green-tag">Recurring Model</span><span class="tag green-tag">Zero Competition</span></div>
+      </div>
+    </div>
+
+    <div class="two-col" style="margin-bottom:16px;">
+      <div class="card" style="border-top:3px solid var(--s8)">
+        <div class="card-title">🌿 Landscaping</div>
+        <p style="font-size:0.8rem;color:var(--muted);line-height:1.6;margin-bottom:10px;">Independent operators with 2-5 crews are largely ignored by agencies. High ticket jobs, reviews are critical (homeowners trust them with their property), and SMS for quote follow-up addresses their single biggest daily pain point.</p>
+        <div><span class="tag green-tag">Accessible Owners</span><span class="tag green-tag">Quote Follow-Up Pain</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Why These 4 (Not Others)</div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div class="price-feat" style="font-size:0.8rem;">All are owner-operated — you reach the decision maker directly</div>
+          <div class="price-feat" style="font-size:0.8rem;">All live and die by Google reviews</div>
+          <div class="price-feat" style="font-size:0.8rem;">All lose revenue to slow follow-up on quotes</div>
+          <div class="price-feat" style="font-size:0.8rem;">All have seasonal patterns SMS can fix</div>
+          <div class="price-feat" style="font-size:0.8rem;">None are being aggressively pitched by GHL agencies</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Niche Research Checklist</div>
+      <div class="checklist">
+        <label class="task-item" onclick="toggle('t2_1')"><input type="checkbox" id="t2_1" onchange="save(this)"/><span class="task-text">Search Google Maps for auto detailers and mechanic shops within 30 miles — add all with 5-40 reviews to your spreadsheet</span></label>
+        <label class="task-item" onclick="toggle('t2_2')"><input type="checkbox" id="t2_2" onchange="save(this)"/><span class="task-text">Search Google Maps for pest control companies in your area — note review counts and whether they have a website</span></label>
+        <label class="task-item" onclick="toggle('t2_3')"><input type="checkbox" id="t2_3" onchange="save(this)"/><span class="task-text">Search Google Maps for pool service companies — prioritize solo operators and small crews</span></label>
+        <label class="task-item" onclick="toggle('t2_4')"><input type="checkbox" id="t2_4" onchange="save(this)"/><span class="task-text">Search Google Maps for landscaping companies — add independent operators (not national franchises)</span></label>
+        <label class="task-item" onclick="toggle('t2_5')"><input type="checkbox" id="t2_5" onchange="save(this)"/><span class="task-text">Prospect list reaches 100 businesses total across all 4 niches</span><span class="task-tag">Goal</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       SECTION 3 — WEBSITE SERVICES
+  ============================================================ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <div class="section-badge" style="background:var(--s3)">03</div>
+      <div class="section-title"><h3>Website Services</h3><p>Your foot-in-the-door offer that leads naturally to the monthly retainer</p></div>
+      <div class="section-prog"><small id="c2-s3">0/5</small><div class="prog-track"><div class="prog-fill" id="pb-s3" style="background:var(--s3)"></div></div></div>
+    </div>
+
+    <div class="info">Website building is your <strong>easiest first sale</strong>. A clear, tangible deliverable ("I'll build you a professional website") is far less threatening than a monthly retainer. Once built, the upsell to your core SMS/review system is natural and almost always accepted.</div>
+
+    <div class="two-col" style="margin-bottom:16px;">
+      <div class="card">
+        <div class="card-title">What Every Client Website Needs</div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div class="price-feat" style="font-size:0.8rem;">Phone number visible above the fold (clickable on mobile)</div>
+          <div class="price-feat" style="font-size:0.8rem;">Clear list of services with plain descriptions</div>
+          <div class="price-feat" style="font-size:0.8rem;">Service area stated explicitly</div>
+          <div class="price-feat" style="font-size:0.8rem;">Google reviews pulled and displayed</div>
+          <div class="price-feat" style="font-size:0.8rem;">Quote request form that feeds directly into GHL CRM</div>
+          <div class="price-feat" style="font-size:0.8rem;">Hours of operation and address</div>
+          <div class="price-feat" style="font-size:0.8rem;">Floating "Call Now" button on mobile</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">GHL Website Setup</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div>
+            <p style="font-size:0.78rem;font-weight:600;color:var(--text);margin-bottom:3px;">Building in GHL</p>
+            <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;">Use GHL's drag-and-drop builder. The contact form integrates natively with GHL CRM so every submission triggers your SMS automations automatically.</p>
+          </div>
+          <div>
+            <p style="font-size:0.78rem;font-weight:600;color:var(--text);margin-bottom:3px;">Custom Domain Setup</p>
+            <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;">Client buys domain (GoDaddy/Namecheap). In GHL: Settings → Domains → Add Domain → point DNS records to GHL. Site goes live on their branded URL (e.g., bestlandscapers.com). GHL branding is invisible to visitors.</p>
+          </div>
+          <div>
+            <p style="font-size:0.78rem;font-weight:600;color:var(--text);margin-bottom:3px;">HTML Alternative</p>
+            <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;">Build in HTML/CSS → remove &lt;html&gt;, &lt;head&gt;, &lt;body&gt; wrapper tags → paste into GHL Custom Code block. Contact form gets replaced with GHL's native form widget.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="two-col" style="margin-bottom:16px;">
+      <div class="card">
+        <div class="card-title">Pricing for Website Service</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--content);border-radius:8px;">
+            <span style="font-size:0.82rem;font-weight:500;">Basic Website Build</span>
+            <span style="font-size:0.88rem;font-weight:700;color:var(--accent);">$600–$900</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--content);border-radius:8px;">
+            <span style="font-size:0.82rem;font-weight:500;">Custom + Animations</span>
+            <span style="font-size:0.88rem;font-weight:700;color:var(--accent);">$900–$1,200</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--content);border-radius:8px;">
+            <span style="font-size:0.82rem;font-weight:500;">Hosting (via retainer)</span>
+            <span style="font-size:0.88rem;font-weight:700;color:var(--accent);">Included in Tier 3</span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Data Sources for Building</div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div class="price-feat" style="font-size:0.8rem;">Google Business Profile (services, hours, address, reviews, photos)</div>
+          <div class="price-feat" style="font-size:0.8rem;">Facebook page (bio, photos, customer comments)</div>
+          <div class="price-feat" style="font-size:0.8rem;">Instagram (photos, service examples)</div>
+          <div class="price-feat" style="font-size:0.8rem;">Yelp listing (reviews, service descriptions)</div>
+          <div class="price-feat" style="font-size:0.8rem;">30-minute onboarding call to fill in gaps</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Website Services Checklist</div>
+      <div class="checklist">
+        <label class="task-item" onclick="toggle('t3_1')"><input type="checkbox" id="t3_1" onchange="save(this)"/><span class="task-text">Build a sample website template for landscaping businesses (use as demo in sales conversations)</span></label>
+        <label class="task-item" onclick="toggle('t3_2')"><input type="checkbox" id="t3_2" onchange="save(this)"/><span class="task-text">Build a sample website template for auto detailing / mechanic shops</span></label>
+        <label class="task-item" onclick="toggle('t3_3')"><input type="checkbox" id="t3_3" onchange="save(this)"/><span class="task-text">Understand and practice the GHL custom domain setup process end-to-end</span></label>
+        <label class="task-item" onclick="toggle('t3_4')"><input type="checkbox" id="t3_4" onchange="save(this)"/><span class="task-text">Create a one-page website service menu PDF (what's included, price, timeline)</span></label>
+        <label class="task-item" onclick="toggle('t3_5')"><input type="checkbox" id="t3_5" onchange="save(this)"/><span class="task-text">Practice: identify a local business with no website and build a demo for them before reaching out</span><span class="task-tag">High Impact</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       SECTION 4 — CUSTOMER AVATARS
+  ============================================================ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <div class="section-badge" style="background:var(--s4)">04</div>
+      <div class="section-title"><h3>Customer Avatars</h3><p>Who you're selling to, how they think, and what makes them buy</p></div>
+      <div class="section-prog"><small id="c2-s4">0/4</small><div class="prog-track"><div class="prog-fill" id="pb-s4" style="background:var(--s4)"></div></div></div>
+    </div>
+
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-title">Segment Rankings</div>
+      <table class="rank-table">
+        <thead><tr><th>Segment</th><th>Easiest to Reach</th><th>Most Willing to Pay</th><th>Biggest Pain Point</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Solo Owner-Operator</strong> (landscaper, detailer)</td><td><span class="rank-pill rank-1">#1</span></td><td><span class="rank-pill rank-3">#3</span></td><td><span class="rank-pill rank-2">#2</span></td></tr>
+          <tr><td><strong>Growing Service Business</strong> (pest control, pool)</td><td><span class="rank-pill rank-3">#3</span></td><td><span class="rank-pill rank-1">#1</span></td><td><span class="rank-pill rank-3">#3</span></td></tr>
+          <tr><td><strong>Mechanic Shop Owner</strong></td><td><span class="rank-pill rank-2">#2</span></td><td><span class="rank-pill rank-2">#2</span></td><td><span class="rank-pill rank-1">#1</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="showTab('av1',this)">Solo Owner-Operator</button>
+      <button class="tab-btn" onclick="showTab('av2',this)">Growing Service Business</button>
+      <button class="tab-btn" onclick="showTab('av3',this)">Mechanic Shop Owner</button>
+    </div>
+
+    <div class="tab-panel active" id="av1">
+      <div class="card">
+        <div class="avatar-grid">
+          <div class="avatar-block">
+            <h5>Who They Are</h5>
+            <ul>
+              <li>Age 28-42, started business 2-5 years ago</li>
+              <li>1-3 helpers, does most work themselves</li>
+              <li>Works 50-60 hours/week</li>
+              <li>Revenue $60k-$150k/year</li>
+              <li>Great at the work, terrible at the business side</li>
+            </ul>
+          </div>
+          <div class="avatar-block">
+            <h5>What They've Already Tried</h5>
+            <ul>
+              <li>Posted on Facebook/Instagram — gave up after 2 months</li>
+              <li>Spent $200-300 on Google Ads — "wasted my money"</li>
+              <li>Hired someone to "do social media" — nothing happened</li>
+              <li>Angi/Thumbtack — leads are price shoppers who ghost</li>
+            </ul>
+          </div>
+          <div class="avatar-block">
+            <h5>Where They Hang Out Online</h5>
+            <ul>
+              <li>Local Facebook community and buy/sell/trade groups</li>
+              <li>Lawn Care Life, Detailing Business Talk (FB groups)</li>
+              <li>YouTube (business and trade content)</li>
+              <li>TikTok (younger ones — consuming, not creating)</li>
+            </ul>
+          </div>
+          <div class="avatar-block">
+            <h5>Current Marketing Spend</h5>
+            <ul>
+              <li>$0-400/month total</li>
+              <li>Angi/Thumbtack: $100-300/month (hates it)</li>
+              <li>Boosted Facebook posts: $50 occasionally</li>
+              <li>Most spend: $0 systematically</li>
+            </ul>
+          </div>
+        </div>
+        <div class="quote-box">
+          <h5>Their Actual Words (use these in outreach)</h5>
+          <div class="quote">"I send quotes and never hear back from people."</div>
+          <div class="quote">"I don't have time to post on social media, I'm working all day."</div>
+          <div class="quote">"My competitor does worse work than me but has way more reviews somehow."</div>
+          <div class="quote">"Slow season kills me every single year and I don't know what to do about it."</div>
+          <div class="quote">"I tried ads once and wasted my money."</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="av2">
+      <div class="card">
+        <div class="avatar-grid">
+          <div class="avatar-block">
+            <h5>Who They Are</h5>
+            <ul>
+              <li>Age 38-55, in business 8-15 years</li>
+              <li>3-8 employees, mostly off the tools</li>
+              <li>Revenue $200k-$600k/year</li>
+              <li>Has CRM (Jobber/HouseCall Pro) — uses 20% of it</li>
+              <li>More sophisticated, more skeptical</li>
+            </ul>
+          </div>
+          <div class="avatar-block">
+            <h5>What They've Already Tried</h5>
+            <ul>
+              <li>SEO agency $800-1,500/month — "rankings barely moved"</li>
+              <li>Google Ads — couldn't track results</li>
+              <li>Local magazine / direct mail — nothing came of it</li>
+              <li>Yelp ads — feels like extortion</li>
+            </ul>
+          </div>
+          <div class="avatar-block">
+            <h5>Where They Hang Out</h5>
+            <ul>
+              <li>NPMA (pest control), APSP (pool) associations</li>
+              <li>Industry-specific Facebook groups</li>
+              <li>LinkedIn (somewhat)</li>
+              <li>Local Chamber of Commerce</li>
+            </ul>
+          </div>
+          <div class="avatar-block">
+            <h5>Current Marketing Spend</h5>
+            <ul>
+              <li>$1,000-$3,000/month across multiple channels</li>
+              <li>SEO: $500-$1,500/month</li>
+              <li>Google Ads: $300-$1,000/month</li>
+              <li>Key pain: no idea what's actually working</li>
+            </ul>
+          </div>
+        </div>
+        <div class="quote-box">
+          <h5>Their Actual Words</h5>
+          <div class="quote">"I'm spending money on marketing and I have no idea what's actually working."</div>
+          <div class="quote">"We get leads and nobody follows up fast enough and we lose the job."</div>
+          <div class="quote">"One bad Google review and I swear I lose ten customers."</div>
+          <div class="quote">"I had an SEO company for almost a year and nothing changed."</div>
+          <div class="quote">"Every agency says the same thing and delivers nothing."</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="av3">
+      <div class="card">
+        <div class="avatar-grid">
+          <div class="avatar-block">
+            <h5>Who They Are</h5>
+            <ul>
+              <li>Age 42-60, owns shop 10-25 years</li>
+              <li>2-5 bays, 1-4 employees</li>
+              <li>Revenue $300k-$800k/year</li>
+              <li>Deeply skeptical of anything digital</li>
+              <li>Built business on reputation — watching it erode</li>
+            </ul>
+          </div>
+          <div class="avatar-block">
+            <h5>What They've Already Tried</h5>
+            <ul>
+              <li>Yellow Pages — years ago, maybe still</li>
+              <li>Yelp ads — universally bad experience</li>
+              <li>Website paid $2k for in 2019 — never updated</li>
+              <li>Boosted Facebook posts occasionally</li>
+            </ul>
+          </div>
+          <div class="avatar-block">
+            <h5>Where They Hang Out</h5>
+            <ul>
+              <li>Auto Repair Shop Owners FB groups</li>
+              <li>Industry forums (Kukui, ShopWare, Mitchell 1)</li>
+              <li>Trade magazines (Motor Age, Auto Inc.)</li>
+              <li>Phone and email preferred — not social media</li>
+            </ul>
+          </div>
+          <div class="avatar-block">
+            <h5>What Makes Them Buy</h5>
+            <ul>
+              <li>In-person or phone — not cold email</li>
+              <li>Proof from another shop they can call</li>
+              <li>Plain language — zero jargon</li>
+              <li>Short-term trial commitment to start</li>
+              <li>A specific guarantee with numbers</li>
+            </ul>
+          </div>
+        </div>
+        <div class="quote-box">
+          <h5>Their Actual Words</h5>
+          <div class="quote">"I've been in business 22 years and one bad review is ruining me."</div>
+          <div class="quote">"My customers love me but they never leave reviews — the unhappy ones always do."</div>
+          <div class="quote">"Yelp is a complete scam."</div>
+          <div class="quote">"I lost a job because someone left a fake review and I can't get it taken down."</div>
+          <div class="quote">"Every time I try something like this I get burned."</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <div class="card-title">Avatar Study Checklist</div>
+      <div class="checklist">
+        <label class="task-item" onclick="toggle('t4_1')"><input type="checkbox" id="t4_1" onchange="save(this)"/><span class="task-text">Join 3+ local Facebook groups and read what business owners are saying — note their exact language</span></label>
+        <label class="task-item" onclick="toggle('t4_2')"><input type="checkbox" id="t4_2" onchange="save(this)"/><span class="task-text">Join Lawn Care Life, Detailing Business Talk, and Auto Repair Shop Owners Facebook groups</span></label>
+        <label class="task-item" onclick="toggle('t4_3')"><input type="checkbox" id="t4_3" onchange="save(this)"/><span class="task-text">Read 20+ Google reviews FOR businesses in your niches to understand how customers describe them</span></label>
+        <label class="task-item" onclick="toggle('t4_4')"><input type="checkbox" id="t4_4" onchange="save(this)"/><span class="task-text">Write down 5 phrases from each avatar that you'll use verbatim in your outreach messages</span><span class="task-tag">High Impact</span></label>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       SECTION 5 — THE OFFER
+  ============================================================ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <div class="section-badge" style="background:var(--s5)">05</div>
+      <div class="section-title"><h3>The Offer</h3><p>What you sell, what you promise, and how you remove all the risk</p></div>
+      <div class="section-prog"><small id="c2-s5">0/6</small><div class="prog-track"><div class="prog-fill" id="pb-s5" style="background:var(--s5)"></div></div></div>
+    </div>
+
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-title">The Transformation — Before & After</div>
+      <div class="two-col">
+        <div style="background:#fff5f5;border-radius:10px;padding:18px;border:1px solid #fecaca;">
+          <h5 style="font-size:0.75rem;font-weight:700;color:#b91c1c;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;">❌ Before Trey Digital</h5>
+          <div style="display:flex;flex-direction:column;gap:7px;">
+            <p style="font-size:0.8rem;color:#7f1d1d;">Quotes go out and die in silence — no follow-up</p>
+            <p style="font-size:0.8rem;color:#7f1d1d;">Phone unanswered nights/weekends — lead calls someone else</p>
+            <p style="font-size:0.8rem;color:#7f1d1d;">8 Google reviews while competitor has 74</p>
+            <p style="font-size:0.8rem;color:#7f1d1d;">No system for slow season — revenue drops every year</p>
+            <p style="font-size:0.8rem;color:#7f1d1d;">Happy customers mean to leave a review and forget</p>
+            <p style="font-size:0.8rem;color:#7f1d1d;">Working 55 hours AND supposed to be doing marketing</p>
+          </div>
+        </div>
+        <div style="background:#f0fdf4;border-radius:10px;padding:18px;border:1px solid #bbf7d0;">
+          <h5 style="font-size:0.75rem;font-weight:700;color:#15803d;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;">✅ After Trey Digital</h5>
+          <div style="display:flex;flex-direction:column;gap:7px;">
+            <p style="font-size:0.8rem;color:#14532d;">Every lead answered in 60 seconds — even at 2am Sunday</p>
+            <p style="font-size:0.8rem;color:#14532d;">Every quote followed up automatically until yes or no</p>
+            <p style="font-size:0.8rem;color:#14532d;">Reviews rolling in automatically after every completed job</p>
+            <p style="font-size:0.8rem;color:#14532d;">Slow season filled by reactivation SMS to past customers</p>
+            <p style="font-size:0.8rem;color:#14532d;">System texts happy customers the moment job is done</p>
+            <p style="font-size:0.8rem;color:#14532d;">Owner focuses on the work — system handles everything else</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pricing-grid" style="margin-bottom:16px;">
+      <div class="price-card">
+        <div class="price-name">Starter System</div>
+        <div class="price-amount">$297<span>/month</span></div>
+        <div class="price-desc">No contract. Cancel anytime. Best for first-time clients and solo operators.</div>
+        <div class="price-features">
+          <div class="price-feat">24/7 AI chatbot on their website (captures leads instantly)</div>
+          <div class="price-feat">Automated review request SMS after every job</div>
+          <div class="price-feat">Missed call text-back system</div>
+          <div class="price-feat">Monthly one-page performance report</div>
+        </div>
+      </div>
+      <div class="price-card featured">
+        <div class="price-badge">Most Popular</div>
+        <div class="price-name">Growth System</div>
+        <div class="price-amount">$497<span>/month</span></div>
+        <div class="price-desc">No contract. Your main offer. Where most clients should land.</div>
+        <div class="price-features">
+          <div class="price-feat">Everything in Starter</div>
+          <div class="price-feat">Full quote follow-up SMS sequence (5-7 touches)</div>
+          <div class="price-feat">Customer reactivation campaign every 90 days</div>
+          <div class="price-feat">Google review management (you respond to reviews)</div>
+          <div class="price-feat">Bi-weekly 15-minute check-in call</div>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="price-name">Full Takeover</div>
+        <div class="price-amount">$797<span>/month</span></div>
+        <div class="price-desc">No contract. For established businesses who want everything handled.</div>
+        <div class="price-features">
+          <div class="price-feat">Everything in Growth</div>
+          <div class="price-feat">Professional website on their custom domain</div>
+          <div class="price-feat">Monthly SMS promotional campaigns (written & sent by you)</div>
+          <div class="price-feat">Custom chatbot trained on their specific business</div>
+          <div class="price-feat">Competitor review monitoring</div>
+          <div class="price-feat">Weekly performance report</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="two-col" style="margin-bottom:16px;">
+      <div class="card">
+        <div class="card-title">3 Free Bonuses (Cost You Nothing)</div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="padding:12px;background:var(--content);border-radius:8px;">
+            <p style="font-size:0.82rem;font-weight:600;color:var(--text);margin-bottom:4px;">Bonus 1 — Local Visibility Audit <span style="color:var(--accent);font-size:0.75rem;">($297 value)</span></p>
+            <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;">One-page PDF showing everywhere their business appears online (Google, Yelp, Facebook, Bing, Apple Maps) and what's wrong/missing. Takes 20 minutes to build. Feels like $500 of work.</p>
+          </div>
+          <div style="padding:12px;background:var(--content);border-radius:8px;">
+            <p style="font-size:0.82rem;font-weight:600;color:var(--text);margin-bottom:4px;">Bonus 2 — Competitor Review Report <span style="color:var(--accent);font-size:0.75rem;">($197 value)</span></p>
+            <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;">Their top 3 local competitors' review counts, ratings, and recent complaints in a simple document. Showing a landscaper their competitor has 94 reviews while they have 14 creates more urgency than any pitch.</p>
+          </div>
+          <div style="padding:12px;background:var(--content);border-radius:8px;">
+            <p style="font-size:0.82rem;font-weight:600;color:var(--text);margin-bottom:4px;">Bonus 3 — SMS Template Pack <span style="color:var(--accent);font-size:0.75rem;">($197 value)</span></p>
+            <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;">10 pre-written SMS templates for their niche: quote follow-up, review requests, slow-season reactivation, referral asks, and seasonal promotions. Delivered as a Google Doc. Costs you 30 minutes.</p>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">What Makes You Different</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div class="price-feat" style="font-size:0.82rem;">You only work with 4 niches — not a generalist agency</div>
+          <div class="price-feat" style="font-size:0.82rem;">Done-FOR-you — clients never log in or learn software</div>
+          <div class="price-feat" style="font-size:0.82rem;">Month-to-month — no scary 6-month contracts</div>
+          <div class="price-feat" style="font-size:0.82rem;">You know their seasonality and customer language</div>
+          <div class="price-feat" style="font-size:0.82rem;">Results visible in 30 days — not 6 months like SEO</div>
+          <div class="price-feat" style="font-size:0.82rem;">Guarantee in writing — removes their biggest fear</div>
+        </div>
+        <div style="margin-top:14px;padding:14px;background:var(--content);border-radius:8px;">
+          <p style="font-size:0.78rem;font-weight:600;color:var(--text);margin-bottom:4px;">The One-Sentence Pitch</p>
+          <p style="font-size:0.82rem;color:var(--muted);font-style:italic;line-height:1.5;">"I help [landscapers/detailers/pest control] automatically follow up on every quote and collect Google reviews after every job — without them changing a single thing about how they work."</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="guarantee">
+      <div class="g-badge">🛡️ Written Guarantee</div>
+      <h4>10 New Google Reviews in 30 Days — Or Month 2 Is Free</h4>
+      <p>If the system doesn't get your client at least 10 new Google reviews in their first 30 days, their second month is completely free. No questions, no hoops, no awkward conversation. You either see results or you don't pay again until you do.</p>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <div class="card-title">Offer Readiness Checklist</div>
+      <div class="checklist">
+        <label class="task-item" onclick="toggle('t5_1')"><input type="checkbox" id="t5_1" onchange="save(this)"/><span class="task-text">Practice explaining each of the 3 tiers out loud until it takes under 2 minutes</span></label>
+        <label class="task-item" onclick="toggle('t5_2')"><input type="checkbox" id="t5_2" onchange="save(this)"/><span class="task-text">Build the Local Visibility Audit template (Google Doc or Canva one-pager)</span><span class="task-tag">Bonus 1</span></label>
+        <label class="task-item" onclick="toggle('t5_3')"><input type="checkbox" id="t5_3" onchange="save(this)"/><span class="task-text">Create your SMS Template Pack document (10 templates, Google Doc)</span><span class="task-tag">Bonus 3</span></label>
+        <label class="task-item" onclick="toggle('t5_4')"><input type="checkbox" id="t5_4" onchange="save(this)"/><span class="task-text">Set up Stripe recurring subscription billing for all 3 tiers</span></label>
+        <label class="task-item" onclick="toggle('t5_5')"><input type="checkbox" id="t5_5" onchange="save(this)"/><span class="task-text">Build the GHL automation system for Tier 1 (chatbot + review request + missed call text-back)</span><span class="task-tag">High Impact</span></label>
+        <label class="task-item" onclick="toggle('t5_6')"><input type="checkbox" id="t5_6" onchange="save(this)"/><span class="task-text">Create a one-page proposal PDF template for sending after discovery calls</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       SECTION 6 — 14-DAY LAUNCH PLAN
+  ============================================================ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <div class="section-badge" style="background:var(--s6)">06</div>
+      <div class="section-title"><h3>14-Day Launch Plan</h3><p>Zero ad spend. Exact daily actions. Every script written out.</p></div>
+      <div class="section-prog"><small id="c2-s6">0/14</small><div class="prog-track"><div class="prog-fill" id="pb-s6" style="background:var(--s6)"></div></div></div>
+    </div>
+
+    <div class="alert"><strong>Honest Expectation:</strong> 10 clients in 14 days from cold outreach is very aggressive. Realistic outcome: 2-4 clients closed by day 14, another 5-8 in active conversation. Hit 10 by day 21-30 if you execute everything below.</div>
+
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-title">Where to Find Customers Right Now</div>
+      <div class="three-col">
+        <div style="background:var(--content);border-radius:10px;padding:14px;">
+          <p style="font-size:0.78rem;font-weight:600;color:var(--text);margin-bottom:8px;">🗺️ Google Maps</p>
+          <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;">Search each niche + your city. Target businesses with 5-40 reviews and 3.5-4.5 stars. These are established but hurting. Zero reviews = maximum pain.</p>
+        </div>
+        <div style="background:var(--content);border-radius:10px;padding:14px;">
+          <p style="font-size:0.78rem;font-weight:600;color:var(--text);margin-bottom:8px;">📘 Facebook Groups</p>
+          <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;">Local community groups, Lawn Care Life, Detailing Business Talk, Auto Repair Shop Owners, Independent Garage Owners, Pest Control Operators Forum, Pool and Spa Professionals.</p>
+        </div>
+        <div style="background:var(--content);border-radius:10px;padding:14px;">
+          <p style="font-size:0.78rem;font-weight:600;color:var(--text);margin-bottom:8px;">📸 Instagram</p>
+          <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;">Search #[yourcity]landscaping, #[yourcity]autodetailing, #[yourcity]pestcontrol. Find businesses with under 500 followers and inconsistent posting.</p>
+        </div>
+        <div style="background:var(--content);border-radius:10px;padding:14px;">
+          <p style="font-size:0.78rem;font-weight:600;color:var(--text);margin-bottom:8px;">🏘️ Nextdoor</p>
+          <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;">See which businesses are being praised (without many reviews — warm leads) and which are getting complaints (active pain — also leads).</p>
+        </div>
+        <div style="background:var(--content);border-radius:10px;padding:14px;">
+          <p style="font-size:0.78rem;font-weight:600;color:var(--text);margin-bottom:8px;">🌐 Alignable</p>
+          <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;">Underused local business network. Almost no competition. Create a free profile, connect with business owners in your area, start conversations.</p>
+        </div>
+        <div style="background:var(--content);border-radius:10px;padding:14px;">
+          <p style="font-size:0.78rem;font-weight:600;color:var(--text);margin-bottom:8px;">⭐ Yelp</p>
+          <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;">Search your niches. Find businesses with recent 1-star reviews and no owner response. That's an active reputation problem with no system — lead with that.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- OUTREACH SCRIPTS -->
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-title">The 5 Outreach Scripts <span class="badge">Copy & Paste Ready</span></div>
+
+      <div class="accordion">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <h4>Script 1 — Cold Facebook/Instagram DM (Leading With Audit)</h4>
+          <div class="acc-meta"><span class="acc-tag" style="background:#fff7ed;color:#c2410c;">First Touch</span><span class="acc-arrow">▼</span></div>
+        </div>
+        <div class="acc-body">
+          <div class="script-box">Hey [Name] — I was looking for [landscapers/detailers/pest control] in [city] and came across [Business Name]. I noticed you've got some solid reviews but I pulled together a quick look at how your business shows up online vs your competitors and there are a couple of things I think are costing you jobs. I put it in a short document — totally free, no pitch. Want me to send it over?<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+          <p class="script-note">Keep it this short. Do NOT explain what you do. Do NOT use the word "marketing." Wait for the yes, then send the audit.</p>
+        </div>
+      </div>
+
+      <div class="accordion">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <h4>Script 2 — Follow-Up After They Say Yes</h4>
+          <div class="acc-meta"><span class="acc-tag" style="background:#eff6ff;color:#1d4ed8;">Second Touch</span><span class="acc-arrow">▼</span></div>
+        </div>
+        <div class="acc-body">
+          <div class="script-box">Here it is — [attach audit or Loom link]. The short version: [Business Name] has [X] reviews. The top three competitors in [city] have [X], [X], and [X]. The biggest gap I see is [quote follow-up / review collection / after-hours response]. This is exactly what I help businesses like yours fix automatically — no extra work on your end. If you want to see how it works I'm happy to walk you through it on a quick call. No pressure either way.<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+        </div>
+      </div>
+
+      <div class="accordion">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <h4>Script 3 — In-Person Walk-In</h4>
+          <div class="acc-meta"><span class="acc-tag" style="background:#f0fdf4;color:#15803d;">Highest Conversion</span><span class="acc-arrow">▼</span></div>
+        </div>
+        <div class="acc-body">
+          <div class="script-box">Hey, I'm Trey — I run a local marketing company called Trey Digital. I specifically work with [landscapers/detailers/mechanics] in the area. I was actually looking at your Google presence this week and I pulled something together I think you'd find interesting — it's a quick comparison of where you stand vs your top competitors in [city]. It'll take me two minutes to show you. Is now a good time or is there a better time I could come back?<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+          <p class="script-note">Don't pitch the product yet. Just ask for two minutes to show them the audit. The audit does the selling.</p>
+        </div>
+      </div>
+
+      <div class="accordion">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <h4>Script 4 — Warm Network (Your 5 Contacts)</h4>
+          <div class="acc-meta"><span class="acc-tag" style="background:#fdf4ff;color:#7e22ce;">Warm Lead</span><span class="acc-arrow">▼</span></div>
+        </div>
+        <div class="acc-body">
+          <div class="script-box">Hey [Name] — I just launched something I've been building for a while. I'm helping local service businesses — landscapers, detailers, that kind of thing — set up an automated system that follows up on their leads and gets them more Google reviews without them doing anything extra. I'd love to offer you a free month to try it since I know you and trust you'll give me honest feedback. And if you know anyone else who runs that kind of business I'd really appreciate an intro. Either way no pressure, just wanted you to know first.<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+        </div>
+      </div>
+
+      <div class="accordion">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <h4>Script 5 — Facebook Group Value Comment (Attracts Inbound)</h4>
+          <div class="acc-meta"><span class="acc-tag" style="background:#fff7ed;color:#c2410c;">No Pitch</span><span class="acc-arrow">▼</span></div>
+        </div>
+        <div class="acc-body">
+          <div class="script-box">Honestly the biggest thing I see with [landscaping/detailing] businesses is that most of the revenue is sitting in past customers who just went quiet. A simple text campaign to everyone who booked in the last 12 months but hasn't come back usually fills a slow calendar faster than chasing new leads. Happy to share exactly how to set that up if it's helpful.<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+          <p class="script-note">Post this when someone asks about getting more customers or dealing with slow season. Wait for replies and DMs. NEVER drop a link in a group post.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- LANDING PAGE STRUCTURE -->
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-title">Landing Page Structure</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="padding:14px;background:var(--bg);border-radius:8px;border-left:3px solid var(--accent);">
+          <p style="font-size:0.72rem;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">Headline</p>
+          <p style="font-size:0.95rem;font-weight:700;color:#fff;">Stop Losing Jobs to Whoever Follows Up Fastest</p>
+        </div>
+        <div style="padding:14px;background:var(--bg);border-radius:8px;border-left:3px solid #6366f1;">
+          <p style="font-size:0.72rem;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">Subheadline</p>
+          <p style="font-size:0.85rem;color:#94a3b8;line-height:1.5;">We build an automated system for landscapers, detailers, mechanics, pest control, and pool service companies that responds to every lead, follows up on every quote, and collects Google reviews after every job — without you changing a single thing about how you work.</p>
+        </div>
+        <div style="padding:14px;background:var(--bg);border-radius:8px;border-left:3px solid #f59e0b;">
+          <p style="font-size:0.72rem;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">5 Bullet Points</p>
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <p style="font-size:0.8rem;color:#94a3b8;">✓ Every new inquiry gets a response in under 60 seconds — even at 2am on a Sunday</p>
+            <p style="font-size:0.8rem;color:#94a3b8;">✓ Every quote you send gets automatically followed up until you get a yes or a no</p>
+            <p style="font-size:0.8rem;color:#94a3b8;">✓ After every completed job, your customer gets a friendly text asking for a Google review</p>
+            <p style="font-size:0.8rem;color:#94a3b8;">✓ When slow season hits, a campaign goes out to every past customer bringing them back</p>
+            <p style="font-size:0.8rem;color:#94a3b8;">✓ You get a monthly report showing what the system did — in plain English, no jargon</p>
+          </div>
+        </div>
+        <div style="padding:14px;background:var(--accent);border-radius:8px;text-align:center;">
+          <p style="font-size:0.88rem;font-weight:700;color:#fff;">Book Your Free Business Audit → [Calendly Link]</p>
+          <p style="font-size:0.72rem;color:rgba(255,255,255,0.75);margin-top:4px;">No contract. Month-to-month. 10 new reviews in 30 days or month 2 is free.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 14 DAYS -->
+    <div class="card">
+      <div class="card-title">Day-by-Day Actions <span class="badge">Check off as you complete each day</span></div>
+      <div class="day-grid">
+        <label class="day-card" style="cursor:pointer;" onclick="toggleDay('d1')">
+          <div class="day-header"><div class="day-num" id="dn1">D1</div><div><div class="day-title">Foundation Setup</div><div class="day-time">3 hours</div></div><input type="checkbox" id="d1" onchange="saveDay(this)" style="margin-left:auto;width:16px;height:16px;accent-color:var(--accent);"/></div>
+          <div class="day-tasks">
+            <p class="day-task">Calendly set up with 30-min discovery call slot</p>
+            <p class="day-task">Landing page live on basic URL</p>
+            <p class="day-task">Audit template built (Google Doc)</p>
+            <p class="day-task">Prospect tracking spreadsheet created</p>
+          </div>
+        </label>
+        <label class="day-card" style="cursor:pointer;" onclick="toggleDay('d2')">
+          <div class="day-header"><div class="day-num" id="dn2">D2</div><div><div class="day-title">Warm Network + List Building</div><div class="day-time">2 hours</div></div><input type="checkbox" id="d2" onchange="saveDay(this)" style="margin-left:auto;width:16px;height:16px;accent-color:var(--accent);"/></div>
+          <div class="day-tasks">
+            <p class="day-task">Message all 5 warm contacts (Script 4)</p>
+            <p class="day-task">Google Maps: build prospect list to 50 businesses</p>
+            <p class="day-task">Note review counts for each business</p>
+          </div>
+        </label>
+        <label class="day-card" style="cursor:pointer;" onclick="toggleDay('d3')">
+          <div class="day-header"><div class="day-num" id="dn3">D3</div><div><div class="day-title">List to 100 + Join Groups</div><div class="day-time">2 hours</div></div><input type="checkbox" id="d3" onchange="saveDay(this)" style="margin-left:auto;width:16px;height:16px;accent-color:var(--accent);"/></div>
+          <div class="day-tasks">
+            <p class="day-task">Prospect list reaches 100 businesses</p>
+            <p class="day-task">Join all 6 Facebook groups listed above</p>
+            <p class="day-task">Read groups — do NOT post yet</p>
+            <p class="day-task">Identify 10 business owners in groups</p>
+          </div>
+        </label>
+        <label class="day-card" style="cursor:pointer;" onclick="toggleDay('d4')">
+          <div class="day-header"><div class="day-num" id="dn4">D4</div><div><div class="day-title">First Outreach Wave</div><div class="day-time">3 hours</div></div><input type="checkbox" id="d4" onchange="saveDay(this)" style="margin-left:auto;width:16px;height:16px;accent-color:var(--accent);"/></div>
+          <div class="day-tasks">
+            <p class="day-task">Send Script 1 to 15 businesses via DM</p>
+            <p class="day-task">Personalize each message (city, niche, one detail)</p>
+            <p class="day-task">Leave 2-3 helpful comments in Facebook groups (Script 5)</p>
+          </div>
+        </label>
+        <label class="day-card" style="cursor:pointer;" onclick="toggleDay('d5')">
+          <div class="day-header"><div class="day-num" id="dn5">D5</div><div><div class="day-title">In-Person Day #1</div><div class="day-time">3-4 hours</div></div><input type="checkbox" id="d5" onchange="saveDay(this)" style="margin-left:auto;width:16px;height:16px;accent-color:var(--accent);"/></div>
+          <div class="day-tasks">
+            <p class="day-task">Visit 5 nearest businesses on your list</p>
+            <p class="day-task">Use Script 3 — ask for the owner</p>
+            <p class="day-task">Leave one-page flyer if owner unavailable</p>
+            <p class="day-task">Note when owner will be in — return that day</p>
+          </div>
+        </label>
+        <label class="day-card" style="cursor:pointer;" onclick="toggleDay('d6')">
+          <div class="day-header"><div class="day-num" id="dn6">D6</div><div><div class="day-title">Loom Video Audits</div><div class="day-time">2 hours</div></div><input type="checkbox" id="d6" onchange="saveDay(this)" style="margin-left:auto;width:16px;height:16px;accent-color:var(--accent);"/></div>
+          <div class="day-tasks">
+            <p class="day-task">Record 5 personalized Loom videos (3 mins each)</p>
+            <p class="day-task">Show their profile vs competitor on screen share</p>
+            <p class="day-task">Send Loom link via DM with brief personal message</p>
+          </div>
+        </label>
+        <label class="day-card" style="cursor:pointer;" onclick="toggleDay('d7')">
+          <div class="day-header"><div class="day-num" id="dn7">D7</div><div><div class="day-title">Follow Up + 2nd Wave</div><div class="day-time">2 hours</div></div><input type="checkbox" id="d7" onchange="saveDay(this)" style="margin-left:auto;width:16px;height:16px;accent-color:var(--accent);"/></div>
+          <div class="day-tasks">
+            <p class="day-task">Follow up all Day 4 DMs that didn't respond</p>
+            <p class="day-task">Send Script 1 to 15 more businesses</p>
+            <p class="day-task">Check warm network — follow up non-responders</p>
+          </div>
+        </label>
+        <label class="day-card" style="cursor:pointer;" onclick="toggleDay('d8')">
+          <div class="day-header"><div class="day-num" id="dn8">D8</div><div><div class="day-title">Handle Responses + Book Calls</div><div class="day-time">2 hours</div></div><input type="checkbox" id="d8" onchange="saveDay(this)" style="margin-left:auto;width:16px;height:16px;accent-color:var(--accent);"/></div>
+          <div class="day-tasks">
+            <p class="day-task">Reply to every conversation from this week</p>
+            <p class="day-task">Move every interested person toward booking a call</p>
+            <p class="day-task">When asked price: "Depends on needs — 30 min call will show you"</p>
+          </div>
+        </label>
+        <label class="day-card" style="cursor:pointer;" onclick="toggleDay('d9')">
+          <div class="day-header"><div class="day-num" id="dn9">D9</div><div><div class="day-title">In-Person Day #2 + 3rd Wave</div><div class="day-time">3 hours</div></div><input type="checkbox" id="d9" onchange="saveDay(this)" style="margin-left:auto;width:16px;height:16px;accent-color:var(--accent);"/></div>
+          <div class="day-tasks">
+            <p class="day-task">Return to businesses where owner was unavailable Day 5</p>
+            <p class="day-task">Visit 3 new businesses from list</p>
+            <p class="day-task">Send outreach to 15 more businesses</p>
+          </div>
+        </label>
+        <label class="day-card" style="cursor:pointer;" onclick="toggleDay('d10')">
+          <div class="day-header"><div class="day-num" id="dn10">D10</div><div><div class="day-title">Discovery Calls</div><div class="day-time">1-2 hrs/call</div></div><input type="checkbox" id="d10" onchange="saveDay(this)" style="margin-left:auto;width:16px;height:16px;accent-color:var(--accent);"/></div>
+          <div class="day-tasks">
+            <p class="day-task">Min 5: Ask about their business — listen</p>
+            <p class="day-task">Mid 10: Show their audit on screen share</p>
+            <p class="day-task">Next 10: Walk through the system in plain language</p>
+            <p class="day-task">Last 5: Present offer + ask "Do you want to get started today?"</p>
+          </div>
+        </label>
+        <label class="day-card" style="cursor:pointer;" onclick="toggleDay('d11')">
+          <div class="day-header"><div class="day-num" id="dn11">D11</div><div><div class="day-title">Close + Send Proposals</div><div class="day-time">2 hours</div></div><input type="checkbox" id="d11" onchange="saveDay(this)" style="margin-left:auto;width:16px;height:16px;accent-color:var(--accent);"/></div>
+          <div class="day-tasks">
+            <p class="day-task">Send proposal same day as call (not a week later)</p>
+            <p class="day-task">Follow up same day: "Just sent over the proposal..."</p>
+            <p class="day-task">Handle objections on the spot — don't let deals go cold</p>
+          </div>
+        </label>
+        <label class="day-card" style="cursor:pointer;" onclick="toggleDay('d12')">
+          <div class="day-header"><div class="day-num" id="dn12">D12</div><div><div class="day-title">Double Down on What Works</div><div class="day-time">2 hours</div></div><input type="checkbox" id="d12" onchange="saveDay(this)" style="margin-left:auto;width:16px;height:16px;accent-color:var(--accent);"/></div>
+          <div class="day-tasks">
+            <p class="day-task">Check spreadsheet — which outreach method got most responses?</p>
+            <p class="day-task">Do 2x more of whatever worked best</p>
+            <p class="day-task">Follow up every open proposal</p>
+          </div>
+        </label>
+        <label class="day-card" style="cursor:pointer;" onclick="toggleDay('d13')">
+          <div class="day-header"><div class="day-num" id="dn13">D13</div><div><div class="day-title">Onboard First Clients</div><div class="day-time">3 hours</div></div><input type="checkbox" id="d13" onchange="saveDay(this)" style="margin-left:auto;width:16px;height:16px;accent-color:var(--accent);"/></div>
+          <div class="day-tasks">
+            <p class="day-task">Build GHL system for first clients (bill after, deliver first)</p>
+            <p class="day-task">Keep sending 10 outreach messages — do NOT stop</p>
+            <p class="day-task">Document first client results from day 1 (case study in progress)</p>
+          </div>
+        </label>
+        <label class="day-card" style="cursor:pointer;" onclick="toggleDay('d14')">
+          <div class="day-header"><div class="day-num" id="dn14">D14</div><div><div class="day-title">Review + Plan Week 3</div><div class="day-time">1 hour</div></div><input type="checkbox" id="d14" onchange="saveDay(this)" style="margin-left:auto;width:16px;height:16px;accent-color:var(--accent);"/></div>
+          <div class="day-tasks">
+            <p class="day-task">Count: messages sent / responses / calls / proposals / closed</p>
+            <p class="day-task">Calculate conversion rate at each stage</p>
+            <p class="day-task">Identify #1 channel that produced results — commit to it</p>
+            <p class="day-task">Plan next 7 days with specific outreach targets</p>
+          </div>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       SECTION 7 — SALES SYSTEM
+  ============================================================ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <div class="section-badge" style="background:var(--s7)">07</div>
+      <div class="section-title"><h3>Sales System</h3><p>Value-first selling that builds trust and closes without pressure</p></div>
+      <div class="section-prog"><small id="c2-s7">0/8</small><div class="prog-track"><div class="prog-fill" id="pb-s7" style="background:var(--s7)"></div></div></div>
+    </div>
+
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-title">Value-First Content Strategy</div>
+      <div class="two-col">
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="padding:12px;background:var(--content);border-radius:8px;">
+            <p style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:4px;">Facebook Group Posts</p>
+            <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;">Answer business owners' questions about slow seasons, reviews, lead follow-up. No links. No pitches. Just the real answer. People check your profile and DM you.</p>
+          </div>
+          <div style="padding:12px;background:var(--content);border-radius:8px;">
+            <p style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:4px;">Loom Audit Videos</p>
+            <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;">Record a 3-min screen share of a real business's Google profile showing their review count vs competitors. Post findings publicly (blur name). Every landscaper who reads it wonders if their profile has the same problems.</p>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="padding:12px;background:var(--content);border-radius:8px;">
+            <p style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:4px;">Give Away SMS Templates</p>
+            <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;">Post "here are 5 texts that bring back dormant customers" with the actual messages written out. Anyone who reads it and thinks "I should be sending this" is a buyer who doesn't know it yet.</p>
+          </div>
+          <div style="padding:12px;background:var(--content);border-radius:8px;">
+            <p style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:4px;">The Core Rule</p>
+            <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;">Never talk about marketing. Talk about their actual problems in their actual language. The goal: make them think "how does he know this about my business?" They'll come to you.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5 EMAILS -->
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-title">5-Email Welcome Sequence <span class="badge">Send these to new subscribers in order</span></div>
+
+      <div class="accordion">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <h4>Email 1 — Welcome + Immediate Value (Send Immediately)</h4>
+          <div class="acc-meta"><span class="acc-tag" style="background:#f0fdf4;color:#15803d;">Day 0</span><span class="acc-arrow">▼</span></div>
+        </div>
+        <div class="acc-body">
+          <p style="font-size:0.78rem;font-weight:600;color:var(--muted);margin-bottom:8px;">Subject: Here's what I promised + one thing you didn't ask for</p>
+          <div class="script-box">Hey [First Name],
+
+Welcome — and thanks for taking a few minutes to look at what Trey Digital does. I'll keep this short because I know you're probably in the middle of a workday.
+
+Here's the free Business Audit Checklist I mentioned — it takes about 10 minutes to go through and will show you exactly where your business stands online right now compared to your competitors.
+
+[Link to audit checklist]
+
+But I wanted to add something I didn't advertise.
+
+I spent some time this week looking at how businesses like yours — landscapers, detailers, pest control and pool companies — show up on Google in your area. What I found was the same thing almost every time: great businesses with great reviews from happy customers, losing jobs every single week to competitors who aren't better at the work. They just follow up faster.
+
+That's it. Not better service. Not lower prices. They just respond to leads quicker and ask for reviews more consistently.
+
+Over the next few days I'm going to show you exactly how that happens and what you can do about it — whether you ever work with me or not.
+
+Talk soon,
+Trey
+
+P.S. — If you want to skip ahead and just see what the system looks like, you can book a free 30-minute call here: [Calendly link]. No pressure, no pitch. I'll just show you what I'd build for your specific business.<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+        </div>
+      </div>
+
+      <div class="accordion">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <h4>Email 2 — The Problem Story (Day 2)</h4>
+          <div class="acc-meta"><span class="acc-tag" style="background:#fff7ed;color:#c2410c;">Day 2</span><span class="acc-arrow">▼</span></div>
+        </div>
+        <div class="acc-body">
+          <p style="font-size:0.78rem;font-weight:600;color:var(--muted);margin-bottom:8px;">Subject: The $4,800 quote that never came back</p>
+          <div class="script-box">Hey [First Name],
+
+I want to tell you about a conversation I had with a landscaping company owner a few weeks ago.
+
+He'd done a consultation, put together a full quote for a backyard renovation — pavers, lighting, the whole thing. Around $4,800 job. Sent it over on a Thursday. Heard nothing.
+
+He figured the customer went with someone else. Moved on.
+
+I asked him one question: "Did you follow up?"
+
+He said he sent one email a week later. That was it. Didn't want to seem pushy.
+
+Here's what actually happened on the customer's end: they got busy, forgot to reply, and assumed the landscaper had moved on. They ended up booking the second company they called — not because they were better or cheaper, but because that company texted them twice and felt more available.
+
+$4,800 gone. Not because of the price. Not because of the work. Because of one follow-up text that never got sent.
+
+This happens every single day in every service business. Quotes go out and die in silence not because the customer isn't interested — but because nobody followed up at the right time in the right way.
+
+Tomorrow I'm going to show you the exact sequence that brings those quotes back.
+
+Trey<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+        </div>
+      </div>
+
+      <div class="accordion">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <h4>Email 3 — Social Proof (Day 4)</h4>
+          <div class="acc-meta"><span class="acc-tag" style="background:#eff6ff;color:#1d4ed8;">Day 4</span><span class="acc-arrow">▼</span></div>
+        </div>
+        <div class="acc-body">
+          <p style="font-size:0.78rem;font-weight:600;color:var(--muted);margin-bottom:8px;">Subject: From 8 reviews to 31 in 34 days</p>
+          <div class="script-box">Hey [First Name],
+
+I want to show you something specific today instead of talking in generalizations.
+
+A landscaping company had 8 Google reviews when we started working together. Good reviews — all five stars. But 8 reviews in a market where their main competitor had 54 meant they were invisible to anyone who didn't already know them.
+
+The problem wasn't that their customers were unhappy. Their customers loved them. The problem was the ask never happened. Owners are busy. They finish a job, say goodbye, move to the next one. The happy customer means to leave a review and forgets within 48 hours.
+
+Here's what changed: after every completed job, the customer got a text. Not a generic "please review us" message. A short, friendly, specific text that took three seconds to read and had one link to tap. That's it.
+
+34 days later: 31 reviews. All five stars.
+
+What changed in their business? They started showing up in Google searches they were invisible in before. New customers started calling who had never heard of them through word of mouth. One of those calls turned into a $6,200 job.
+
+The review system paid for itself in the first month.
+
+If you want to see exactly how the system works for your type of business, grab a time here: [Calendly link]
+
+Trey<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+        </div>
+      </div>
+
+      <div class="accordion">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <h4>Email 4 — Handle The Big Objection (Day 6)</h4>
+          <div class="acc-meta"><span class="acc-tag" style="background:#fdf4ff;color:#7e22ce;">Day 6</span><span class="acc-arrow">▼</span></div>
+        </div>
+        <div class="acc-body">
+          <p style="font-size:0.78rem;font-weight:600;color:var(--muted);margin-bottom:8px;">Subject: "I tried this before and it didn't work"</p>
+          <div class="script-box">Hey [First Name],
+
+I want to address something directly because I know it's sitting in the back of your mind if you've been reading these emails.
+
+You've probably tried some version of this before. Maybe you paid someone to run your Facebook ads. Maybe you hired a kid to do your social media. Maybe you signed up for some marketing tool that promised everything and delivered a login screen you stopped checking after week two.
+
+And it didn't work. Or it sort of worked for a month and then fizzled. Or you couldn't tell if it worked at all because nobody showed you any real numbers.
+
+I get it. The marketing industry has done an excellent job of burning small business owners and then selling them the same thing with a new name.
+
+Here's what's different — and I want you to decide for yourself if this is true:
+
+The system I build doesn't require you to do anything differently. It doesn't need you to post on social media. It doesn't need you to learn new software. It doesn't need you to change how you run your business at all. It runs in the background and does three things: responds to leads when you can't, follows up on quotes automatically, and asks your customers for reviews after every job.
+
+You don't manage it. You don't log in. You get a monthly report showing what it did.
+
+And if it doesn't get you at least 10 new Google reviews in your first 30 days, you don't pay for month two. Not "contact us for a refund." Just — you don't get charged. Simple.
+
+Trey<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+        </div>
+      </div>
+
+      <div class="accordion">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <h4>Email 5 — The Soft Offer (Day 8)</h4>
+          <div class="acc-meta"><span class="acc-tag" style="background:#dcfce7;color:#15803d;">Day 8</span><span class="acc-arrow">▼</span></div>
+        </div>
+        <div class="acc-body">
+          <p style="font-size:0.78rem;font-weight:600;color:var(--muted);margin-bottom:8px;">Subject: One spot — and then I'm closing this for a while</p>
+          <div class="script-box">Hey [First Name],
+
+I'll keep this one short.
+
+I'm only taking on a small number of new clients each month. Not as a sales tactic — just because setting this up properly for a new business takes real time and I won't take on more than I can do well.
+
+I have one spot left this month.
+
+Here's what it includes at the starting level — $297 a month, no contract:
+
+A 24/7 system that responds to every new lead within 60 seconds. Automated review requests sent to every customer after every job. A missed call text-back so nobody who calls you goes unanswered. And a monthly one-page report showing everything the system did.
+
+If you don't get 10 new Google reviews in your first 30 days, month two is free.
+
+If this sounds right for where your business is right now, book a call here and we'll figure out together if it makes sense: [Calendly link]
+
+If the timing isn't right, no problem at all. I'll keep sending useful stuff either way.
+
+Trey
+
+P.S. — If you have a specific question before getting on a call, just reply to this email. I read every one.<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DM TEMPLATES -->
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-title">DM Conversation Templates</div>
+      <div class="accordion">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <h4>DM 1 — After They Engage With Your Content</h4>
+          <div class="acc-meta"><span class="acc-arrow">▼</span></div>
+        </div>
+        <div class="acc-body">
+          <div class="script-box">Hey [Name] — saw your [landscaping/detailing/pest control] business in [city]. Randomly pulled up your Google profile out of curiosity and noticed something I thought you'd want to know about. Not trying to sell you anything — just genuinely thought it was worth mentioning. Mind if I share what I found?<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+          <p class="script-note">Wait for the reply. If they say yes → send the Competitor Gap Report for their business.</p>
+        </div>
+      </div>
+      <div class="accordion">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <h4>DM 2 — When They Ask "What Do You Do Exactly"</h4>
+          <div class="acc-meta"><span class="acc-arrow">▼</span></div>
+        </div>
+        <div class="acc-body">
+          <div class="script-box">Basically I build an automated system for [landscaping/detailing/pest control] businesses that does three things: responds to new leads instantly even when you're on a job, follows up on quotes automatically so they don't go cold, and sends a review request to your customers after every job so you don't have to remember to ask. Once it's set up it runs on its own — you don't manage anything. Want me to show you what it looks like for a business like yours?<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+        </div>
+      </div>
+      <div class="accordion">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <h4>DM 3 — When They Ask "How Much Is It"</h4>
+          <div class="acc-meta"><span class="acc-arrow">▼</span></div>
+        </div>
+        <div class="acc-body">
+          <div class="script-box">Depends on what you actually need — I have a few different options starting at $297 a month with no contract. But honestly the best way to figure out what makes sense for your business is a quick 20-minute call where I can show you the setup and you can tell me if it's even a fit. Zero pressure either way — if it doesn't make sense for where you are right now I'll tell you that straight. Want to find a time?<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+        </div>
+      </div>
+      <div class="accordion">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <h4>DM 4 — When They Go Quiet After Showing Interest</h4>
+          <div class="acc-meta"><span class="acc-arrow">▼</span></div>
+        </div>
+        <div class="acc-body">
+          <div class="script-box">Hey [Name] — just checking in. No rush at all on my end, just wanted to make sure this didn't get buried. If the timing isn't right that's completely fine — just let me know and I'll stop following up.<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
+          <p class="script-note">That last line ("I'll stop following up") gets more replies than any other message in the sequence. Permission to say no = people respond.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-title">FAQ — Objections Handled Before They Ask</div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">"Is this actually worth the money?" <span class="faq-arrow">▼</span></div><div class="faq-a">The honest answer depends on one number: what is one new job worth to your business? For a landscaping company, one new job is $500-3,000. For a detailer, $150-400. For pest control, one recurring contract is $800-1,500/year. The system starts at $297/month. If it brings you one extra job a month you wouldn't have gotten otherwise — a quote that would have gone cold, a past customer who came back — it has paid for itself. Everything else is profit. Most clients see that within the first two weeks.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">"Will this actually work for my business?" <span class="faq-arrow">▼</span></div><div class="faq-a">If your business takes calls from potential customers, sends quotes or estimates, completes jobs for happy customers, and has a slow season — yes. The system works by solving problems every service business has: leads that go unanswered after hours, quotes that don't get followed up, happy customers who never get asked for a review, and past customers who go quiet. The only business this doesn't work for is one at full capacity with a 6-month waitlist and more reviews than they know what to do with.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">"What if I don't have time to deal with this?" <span class="faq-arrow">▼</span></div><div class="faq-a">This is specifically built for people who don't have time. You don't set it up — I do. You don't manage it — it runs on its own. You don't log into anything — I send you a report. The only thing I'll ever need from you is a 30-minute onboarding call at the start and occasional access to your Google Business Profile. After that, your involvement is zero. That's the entire point.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">"I've been burned by marketing companies before." <span class="faq-arrow">▼</span></div><div class="faq-a">I know. It happens constantly and it's the reason I built the guarantee into the offer. If I don't get you at least 10 new Google reviews in your first 30 days, your second month is free — no questions, no hoops. I put that in writing because I'm confident enough in what I've built to stake a month's revenue on it. Beyond that: I only work with four types of businesses. I'm not a generalist. I know your business, your customers, and your slow season before we ever get on a call.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">"Can't I just do this myself?" <span class="faq-arrow">▼</span></div><div class="faq-a">You can. GoHighLevel costs $97/month and everything I build is inside that platform. If you want to spend 40-60 hours learning the software, building the automations, troubleshooting when something breaks, and managing the system — absolutely, it's doable. Most business owners who look into it get three hours in and realize their time is worth more doing the actual work. That's why I exist.</div></div>
+    </div>
+
+    <!-- FOLLOW-UP SEQUENCE -->
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-title">Follow-Up Sequence — For People Who Showed Interest But Didn't Buy</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:var(--content);border-radius:10px;">
+          <div style="min-width:60px;text-align:center;background:var(--s7);color:#fff;border-radius:8px;padding:6px;font-size:0.72rem;font-weight:700;">Day 1</div>
+          <div><p style="font-size:0.82rem;font-weight:600;color:var(--text);margin-bottom:4px;">The Check-In</p><p style="font-size:0.8rem;color:var(--muted);font-style:italic;">"Hey [Name] — just wanted to follow up on our conversation. No rush at all on my end. If the timing isn't right or you have questions I didn't answer well, just let me know."</p></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:var(--content);border-radius:10px;">
+          <div style="min-width:60px;text-align:center;background:var(--s4);color:#fff;border-radius:8px;padding:6px;font-size:0.72rem;font-weight:700;">Day 4</div>
+          <div><p style="font-size:0.82rem;font-weight:600;color:var(--text);margin-bottom:4px;">New Value Drop (don't mention previous convo)</p><p style="font-size:0.8rem;color:var(--muted);font-style:italic;">"Hey [Name] — thought of you when I came across this. Pulled the review counts for the top five [landscapers] in [city] — [Business Name] is sitting at [X]. The top ranked one has [X]. Figured you'd want to see the gap."</p></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:var(--content);border-radius:10px;">
+          <div style="min-width:60px;text-align:center;background:var(--s2);color:#fff;border-radius:8px;padding:6px;font-size:0.72rem;font-weight:700;">Day 7</div>
+          <div><p style="font-size:0.82rem;font-weight:600;color:var(--text);margin-bottom:4px;">The Proof Touch</p><p style="font-size:0.8rem;color:var(--muted);font-style:italic;">"Hey [Name] — quick update. Had a [landscaping/pest control] client just hit [X] new reviews this month through the system. Figured I'd share since it's the kind of thing that's hard to visualize until you see the numbers."</p></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:var(--content);border-radius:10px;">
+          <div style="min-width:60px;text-align:center;background:var(--s6);color:#fff;border-radius:8px;padding:6px;font-size:0.72rem;font-weight:700;">Day 14</div>
+          <div><p style="font-size:0.82rem;font-weight:600;color:var(--text);margin-bottom:4px;">The Loop Close — Most Important Message</p><p style="font-size:0.8rem;color:var(--muted);font-style:italic;">"Hey [Name] — I'm going to stop following up after this one because I don't want to be annoying. If the timing works at some point down the road, you know where to find me. If it's just not the right fit, totally understand — no hard feelings at all."</p></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:var(--content);border-radius:10px;">
+          <div style="min-width:60px;text-align:center;background:var(--muted);color:#fff;border-radius:8px;padding:6px;font-size:0.72rem;font-weight:700;">Day 30+</div>
+          <div><p style="font-size:0.82rem;font-weight:600;color:var(--text);margin-bottom:4px;">Monthly Long Nurture</p><p style="font-size:0.8rem;color:var(--muted);">One piece of useful content per month. No ask. Just value. When they're ready to buy, you're the only person in their inbox who wasn't trying to sell them something for 30 days.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Sales System Checklist</div>
+      <div class="checklist">
+        <label class="task-item" onclick="toggle('t7_1')"><input type="checkbox" id="t7_1" onchange="save(this)"/><span class="task-text">Build the 5-email welcome sequence inside GHL and set up automation triggers</span><span class="task-tag">Priority</span></label>
+        <label class="task-item" onclick="toggle('t7_2')"><input type="checkbox" id="t7_2" onchange="save(this)"/><span class="task-text">Save all 4 DM templates somewhere accessible (Notes app, Google Doc) for quick copy-paste</span></label>
+        <label class="task-item" onclick="toggle('t7_3')"><input type="checkbox" id="t7_3" onchange="save(this)"/><span class="task-text">Add FAQ content to your landing page below the pricing section</span></label>
+        <label class="task-item" onclick="toggle('t7_4')"><input type="checkbox" id="t7_4" onchange="save(this)"/><span class="task-text">Build the 5-touch follow-up sequence in GHL so it runs automatically when a prospect doesn't book</span></label>
+        <label class="task-item" onclick="toggle('t7_5')"><input type="checkbox" id="t7_5" onchange="save(this)"/><span class="task-text">Practice the discovery call structure out loud 3 times before your first real call</span></label>
+        <label class="task-item" onclick="toggle('t7_6')"><input type="checkbox" id="t7_6" onchange="save(this)"/><span class="task-text">Record yourself running a mock discovery call and watch it back</span></label>
+        <label class="task-item" onclick="toggle('t7_7')"><input type="checkbox" id="t7_7" onchange="save(this)"/><span class="task-text">Create your value-first Facebook group posting schedule (3x per week for first month)</span></label>
+        <label class="task-item" onclick="toggle('t7_8')"><input type="checkbox" id="t7_8" onchange="save(this)"/><span class="task-text">Set up Loom (free account) and record your first practice audit video</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       SECTION 8 — GROWTH ROADMAP
+  ============================================================ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <div class="section-badge" style="background:var(--s8)">08</div>
+      <div class="section-title"><h3>Growth Roadmap</h3><p>What got you here won't get you there — here's what will</p></div>
+      <div class="section-prog"><small id="c2-s8">0/6</small><div class="prog-track"><div class="prog-fill" id="pb-s8" style="background:var(--s8)"></div></div></div>
+    </div>
+
+    <div class="channel-row" style="margin-bottom:16px;">
+      <div class="channel-card go">
+        <div class="channel-label go">✓ Double Down</div>
+        <h5>In-Person Walk-Ins</h5>
+        <p>Highest converting channel for these niches. Nobody else does it. A mechanic or landscaper responds to someone physically showing up 3-5x more than a DM. Block two mornings a week, visit five businesses each time.</p>
+      </div>
+      <div class="channel-card go">
+        <div class="channel-label go">✓ Double Down</div>
+        <h5>Loom Video Audits</h5>
+        <p>Highest converting digital channel. Personalized 3-minute screen recording of their specific Google profile costs 10 minutes to make. Response rates 2-3x higher than text DMs. Almost nobody sends them.</p>
+      </div>
+      <div class="channel-card drop">
+        <div class="channel-label drop">✗ Deprioritize</div>
+        <h5>Instagram DMs (to businesses)</h5>
+        <p>Your target niches are not actively checking Instagram business DMs. Mechanics, landscapers, and pest control owners are not on Instagram. Time spent there should go to in-person visits.</p>
+      </div>
+      <div class="channel-card drop">
+        <div class="channel-label drop">✗ Deprioritize</div>
+        <h5>Mass Generic DMs</h5>
+        <p>Generic DMs without personalization get ignored or reported. If you can't spend 2 minutes personalizing with their business name, review count, and city — don't send it. Fewer targeted messages always win.</p>
+      </div>
+    </div>
+
+    <div class="two-col" style="margin-bottom:16px;">
+      <div class="card">
+        <div class="card-title">Second Product for Existing Clients</div>
+        <div style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-radius:10px;padding:18px;margin-bottom:12px;">
+          <h4 style="font-size:0.95rem;font-weight:700;color:#15803d;margin-bottom:6px;">The Seasonal Campaign Package</h4>
+          <p style="font-size:0.8rem;color:#14532d;font-weight:600;margin-bottom:8px;">$197/campaign or $597/quarter</p>
+          <p style="font-size:0.8rem;color:#166534;line-height:1.5;">Four times a year you write and send a promotional SMS campaign to their entire customer list. Spring rush, summer push, fall prep, winter reactivation. You write the messages, schedule in GHL, they go out automatically. Client does nothing.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div class="price-feat" style="font-size:0.8rem;">Time cost: 45 min per client per quarter</div>
+          <div class="price-feat" style="font-size:0.8rem;">At $597/quarter = ~$800/hour of your time</div>
+          <div class="price-feat" style="font-size:0.8rem;">The SMS list you're building becomes more valuable every month</div>
+          <div class="price-feat" style="font-size:0.8rem;">Bundle into Tier 2/3 eventually — offer as add-on to Tier 1 now</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">The Partnership That 3x's Your Reach</div>
+        <div style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border-radius:10px;padding:18px;margin-bottom:12px;">
+          <h4 style="font-size:0.95rem;font-weight:700;color:#1d4ed8;margin-bottom:6px;">Local Supply Companies & Equipment Dealers</h4>
+          <p style="font-size:0.8rem;color:#1e40af;line-height:1.5;">Landscape supply companies see landscapers weekly. Pest control equipment distributors talk to pest control owners regularly. They already have the trusted relationship. You attach yourself to it.</p>
+        </div>
+        <div style="padding:12px;background:var(--content);border-radius:8px;">
+          <p style="font-size:0.78rem;font-weight:600;color:var(--text);margin-bottom:4px;">The Pitch to the Supply Company Owner</p>
+          <p style="font-size:0.8rem;color:var(--muted);font-style:italic;line-height:1.5;">"You already talk to landscapers all week. If you mention what I do and one of them signs up, I'll send you $100 for the intro. You do nothing except mention my name."</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-title">Automations to Remove Yourself from Daily Tasks</div>
+      <div class="three-col">
+        <div style="padding:14px;background:var(--content);border-radius:10px;">
+          <p style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:6px;">📅 Discovery Call Booking</p>
+          <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;">Calendly → GHL workflow. When someone books: auto confirmation text + email, 24-hr reminder, 1-hr reminder, 2-question pre-call form. You show up knowing their situation. Zero scheduling back-and-forth.</p>
+        </div>
+        <div style="padding:14px;background:var(--content);border-radius:10px;">
+          <p style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:6px;">🎉 New Client Onboarding</p>
+          <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;">When marked as new client in GHL: welcome email fires, onboarding form sent (Google profile access, phone, service area), setup call auto-books. Every new client gets the same professional experience.</p>
+        </div>
+        <div style="padding:14px;background:var(--content);border-radius:10px;">
+          <p style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:6px;">📊 Monthly Reporting</p>
+          <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;">GHL tracks all data. Set up automated email to every client on the 1st of each month: new reviews collected, leads captured, campaigns sent. Three lines. Removes manual report building entirely.</p>
+        </div>
+        <div style="padding:14px;background:var(--content);border-radius:10px;">
+          <p style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:6px;">💳 Billing</p>
+          <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;">Stripe recurring subscriptions from day one. Every client on auto-pay. Money lands on the same day every month. You never manually invoice or chase a payment.</p>
+        </div>
+        <div style="padding:14px;background:var(--content);border-radius:10px;">
+          <p style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:6px;">🔁 Prospect Follow-Up</p>
+          <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;">Every prospect who doesn't book or close goes into the 5-touch follow-up sequence in GHL. Runs automatically. You don't think about them again until they reply.</p>
+        </div>
+        <div style="padding:14px;background:var(--content);border-radius:10px;">
+          <p style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:6px;">⭐ Review Requests</p>
+          <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;">Never manually triggered. After every completed job, customer gets review request text automatically through GHL pipeline stages. Set it up once, runs for every client forever.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottleneck-box" style="margin-bottom:16px;">
+      <h4>🚧 The ONE Bottleneck Holding You Back</h4>
+      <p>It is not the product. Not the niche. Not the platform. It is your ability to close a discovery call. There is a difference between being salesy and being confidently clear. Right now, the gap between someone who thinks your service sounds interesting and someone who hands you their card number lives entirely in that 30-minute call.</p>
+      <div class="fix">
+        <h5>The Fix</h5>
+        <p>End every discovery call with a direct question: <em>"Based on what you've told me and what I've shown you, I think the Growth System at $497 is the right fit for your business. Do you want to get started today?"</em> Not aggressive. Not pushy. Just clear. Practice the call out loud before running it live. Call 1-3 will be awkward. By call 5 you'll have a rhythm. By call 10 it feels natural. This single skill unlocks everything else faster than any system you could build.</p>
+      </div>
+    </div>
+
+    <!-- 90-DAY MILESTONES -->
+    <div style="margin-bottom:16px;">
+      <div class="milestone-card" id="m1">
+        <div class="milestone-header">
+          <div class="milestone-month" style="background:var(--s6)">M1</div>
+          <div class="milestone-info">
+            <h4>Month 1 — Prove It Works (Days 1-30)</h4>
+            <p>Target: 1-2 paying clients · $297-$994 MRR · First case study started</p>
+          </div>
+        </div>
+        <div class="milestone-items">
+          <div class="milestone-item">Execute full 14-day launch plan — in-person visits minimum 3 days/week</div>
+          <div class="milestone-item">At least one client showing measurable results (new reviews coming in)</div>
+          <div class="milestone-item">Get a testimonial or screenshot from first client</div>
+          <div class="milestone-item">Note which niche gave the least friction — give it more attention in Month 2</div>
+          <div class="milestone-item">Keep sending 10-15 outreach messages every day regardless of what else is happening</div>
+        </div>
+      </div>
+      <div class="milestone-card" id="m2">
+        <div class="milestone-header">
+          <div class="milestone-month" style="background:var(--s4)">M2</div>
+          <div class="milestone-info">
+            <h4>Month 2 — Use Proof to Sell (Days 31-60)</h4>
+            <p>Target: 4-6 total clients · $1,200-$3,000 MRR · First partnership active</p>
+          </div>
+        </div>
+        <div class="milestone-items">
+          <div class="milestone-item">Stop selling a promise — start selling proof (screenshot of real results)</div>
+          <div class="milestone-item">Get written testimonial and results screenshot from first clients in week 1 of this month</div>
+          <div class="milestone-item">Find and pitch first supply company partnership (referral fee: $100/intro)</div>
+          <div class="milestone-item">Introduce Seasonal Campaign add-on to existing clients at $197</div>
+          <div class="milestone-item">All 5 automations live and running (booking, onboarding, reporting, billing, follow-up)</div>
+        </div>
+      </div>
+      <div class="milestone-card" id="m3">
+        <div class="milestone-header">
+          <div class="milestone-month" style="background:var(--s2)">M3</div>
+          <div class="milestone-info">
+            <h4>Month 3 — Remove Yourself from the Grind (Days 61-90)</h4>
+            <p>Target: 8-12 total clients · $2,500-$6,000 MRR · System runs without you</p>
+          </div>
+        </div>
+        <div class="milestone-items">
+          <div class="milestone-item">Audit your week: every task that GHL can automate — automate it</div>
+          <div class="milestone-item">Build case study library: document every successful client result (30 min per case study)</div>
+          <div class="milestone-item">Identify which niche had highest close rate — shift outreach toward it</div>
+          <div class="milestone-item">Two or more partnership referral sources active</div>
+          <div class="milestone-item">At least one Tier 1 client upgraded to Tier 2</div>
+          <div class="milestone-item">Your time spent on: sales conversations, partnerships, strategy — nothing else</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="background:linear-gradient(135deg,#0f172a,#1e3a2f);border:none;">
+      <div style="text-align:center;padding:12px 0;">
+        <h3 style="color:#fff;font-size:1.1rem;margin-bottom:10px;">What Got You Here Won't Get You There</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:16px;">
+          <div style="background:rgba(255,255,255,0.07);border-radius:10px;padding:14px;">
+            <p style="color:var(--accent);font-size:0.75rem;font-weight:600;margin-bottom:6px;">MONTH 1</p>
+            <p style="color:#fff;font-size:0.82rem;font-weight:600;margin-bottom:4px;">You are the engine</p>
+            <p style="color:#64748b;font-size:0.78rem;line-height:1.5;">Energy + outreach + walking in = first clients. Hustle is the product.</p>
+          </div>
+          <div style="background:rgba(255,255,255,0.07);border-radius:10px;padding:14px;">
+            <p style="color:var(--accent);font-size:0.75rem;font-weight:600;margin-bottom:6px;">MONTH 2</p>
+            <p style="color:#fff;font-size:0.82rem;font-weight:600;margin-bottom:4px;">Proof does the selling</p>
+            <p style="color:#64748b;font-size:0.78rem;line-height:1.5;">Testimonials + screenshots = your energy multiplied. Proof is leverage.</p>
+          </div>
+          <div style="background:rgba(255,255,255,0.07);border-radius:10px;padding:14px;">
+            <p style="color:var(--accent);font-size:0.75rem;font-weight:600;margin-bottom:6px;">MONTH 3</p>
+            <p style="color:#fff;font-size:0.82rem;font-weight:600;margin-bottom:4px;">Systems replace hustle</p>
+            <p style="color:#64748b;font-size:0.78rem;line-height:1.5;">Automations + partnerships = clients without grinding. The business pulls, you don't push.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <div class="card-title">Growth Roadmap Checklist</div>
+      <div class="checklist">
+        <label class="task-item" onclick="toggle('t8_1')"><input type="checkbox" id="t8_1" onchange="save(this)"/><span class="task-text">Month 1 complete: 1-2 clients signed and system running</span><span class="task-tag">Milestone</span></label>
+        <label class="task-item" onclick="toggle('t8_2')"><input type="checkbox" id="t8_2" onchange="save(this)"/><span class="task-text">First partnership pitched to a local supply company or equipment dealer</span></label>
+        <label class="task-item" onclick="toggle('t8_3')"><input type="checkbox" id="t8_3" onchange="save(this)"/><span class="task-text">All 5 core automations built in GHL and tested</span><span class="task-tag">Priority</span></label>
+        <label class="task-item" onclick="toggle('t8_4')"><input type="checkbox" id="t8_4" onchange="save(this)"/><span class="task-text">Month 2 complete: 4-6 clients, first case study documented</span><span class="task-tag">Milestone</span></label>
+        <label class="task-item" onclick="toggle('t8_5')"><input type="checkbox" id="t8_5" onchange="save(this)"/><span class="task-text">Seasonal Campaign add-on introduced to at least one existing client</span></label>
+        <label class="task-item" onclick="toggle('t8_6')"><input type="checkbox" id="t8_6" onchange="save(this)"/><span class="task-text">Month 3 complete: 8-12 clients, full automation stack running, time spent on strategy only</span><span class="task-tag">Milestone</span></label>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ── CHECKBOX LOGIC ──
+function toggle(id){
+  // clicking label triggers checkbox natively, just update visual
+}
+function save(cb){
+  localStorage.setItem(cb.id, cb.checked);
+  const item = cb.closest('.task-item');
+  if(item){ cb.checked ? item.classList.add('done') : item.classList.remove('done'); }
+  updateProgress();
+}
+function loadSaved(){
+  document.querySelectorAll('input[type=checkbox]').forEach(cb=>{
+    if(localStorage.getItem(cb.id)==='true'){
+      cb.checked=true;
+      const item=cb.closest('.task-item');
+      if(item) item.classList.add('done');
+    }
+  });
+  updateProgress();
+}
+function updateProgress(){
+  const sections=['s1','s2','s3','s4','s5','s6','s7','s8'];
+  let totalDone=0,totalAll=0;
+  sections.forEach(sid=>{
+    const el=document.getElementById(sid);
+    if(!el) return;
+    const all=el.querySelectorAll('input[type=checkbox]');
+    const done=el.querySelectorAll('input[type=checkbox]:checked');
+    totalAll+=all.length; totalDone+=done.length;
+    const pct=all.length?Math.round(done.length/all.length*100):0;
+    const pb=document.getElementById('pb-'+sid);
+    if(pb) pb.style.width=pct+'%';
+    const c2=document.getElementById('c2-'+sid);
+    if(c2) c2.textContent=done.length+'/'+all.length;
+    const cn=document.getElementById('c-'+sid);
+    if(cn) cn.textContent=done.length+'/'+all.length+' tasks';
+  });
+  const overall=totalAll?Math.round(totalDone/totalAll*100):0;
+  const ob=document.getElementById('bar-overall');
+  if(ob) ob.style.width=overall+'%';
+  const op=document.getElementById('pct-overall');
+  if(op) op.textContent=overall+'%';
+  const sd=document.getElementById('stat-done');
+  if(sd) sd.textContent=totalDone;
+  const st=document.getElementById('stat-total');
+  if(st) st.textContent=totalAll;
+}
+
+// ── TABS ──
+function showTab(id,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── ACCORDION ──
+function toggleAcc(el){
+  const body=el.nextElementSibling;
+  const arrow=el.querySelector('.acc-arrow');
+  body.classList.toggle('open');
+  if(arrow) arrow.classList.toggle('open');
+}
+function toggleFaq(el){
+  const ans=el.nextElementSibling;
+  ans.classList.toggle('open');
+  el.querySelector('.faq-arrow').textContent=ans.classList.contains('open')?'▲':'▼';
+}
+
+// ── COPY ──
+function copyText(btn){
+  const box=btn.parentElement;
+  const text=box.textContent.replace(btn.textContent,'').trim();
+  navigator.clipboard.writeText(text).then(()=>{
+    btn.textContent='Copied!';
+    btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied');},2000);
+  });
+}
+
+// ── SCROLL NAV ──
+function scrollTo(id){
+  const el=document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ── INIT ──
+document.addEventListener('DOMContentLoaded',()=>{ loadSaved(); });
+</script>
+</body>
+</html>
